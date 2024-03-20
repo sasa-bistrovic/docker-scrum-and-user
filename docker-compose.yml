@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  scrum-user-postgres:
+    image: postgres:latest
+    container_name: scrum-user-postgres
+    volumes:
+      - scrum-user-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=x
+    hostname: postgres
+
+  pgadmin:
+    container_name: scrum-user-pgadmin4
+    image: dpage/pgadmin4
+    ports:
+      - "80:80"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - PGADMIN_DEFAULT_EMAIL=sasa.bistrovic@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=x
+    hostname: pgadmin
+
+  spring-boot-scrum:
+    build: ./spring-boot-scrum
+    container_name: spring-boot-scrum
+    image: docker-scrum-and-user-spring-boot-scrum
+    environment:
+      - DB_SERVER=scrum-user-postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=x
+    ports:
+      - "8080:8080"
+    links:
+      - scrum-user-postgres
+
+  spring-boot-user:
+    build: ./spring-boot-user
+    container_name: spring-boot-user
+    image: docker-scrum-and-user-spring-boot-user
+    environment:
+      - DB_SERVER=scrum-user-postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=x
+    ports:
+      - "8081:8081"
+    links:
+      - scrum-user-postgres
+
+volumes:
+  scrum-user-data:

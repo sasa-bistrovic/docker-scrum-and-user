@@ -1,0 +1,11 @@
+@media (min-width: 600px) {
+  .w3-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .w3-third, .w3-twothird {
+    flex: 0 0 50%; /* Two columns, each taking up 50% of the width */
+  }
+}
