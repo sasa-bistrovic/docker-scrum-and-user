@@ -13,6 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose        
+
       - name: Pull latest base images
         run: |
           docker pull postgres:latest
@@ -29,14 +32,14 @@ jobs:
 
       - name: Tag and Push Docker images
         run: |
-          docker tag postgres ${{ secrets.DOCKER_USERNAME }}/scrum-user-postgres:1.0
-          docker tag dpage/pgadmin4 ${{ secrets.DOCKER_USERNAME }}/scrum-user-pgadmin:1.0
-          docker tag docker-scrum-and-user-spring-boot-scrum ${{ secrets.DOCKER_USERNAME }}/spring-boot-scrum:1.0
-          docker tag docker-scrum-and-user-spring-boot-user ${{ secrets.DOCKER_USERNAME }}/spring-boot-user:1.0
-          docker push ${{ secrets.DOCKER_USERNAME }}/scrum-user-postgres:1.0
-          docker push ${{ secrets.DOCKER_USERNAME }}/scrum-user-pgadmin:1.0
-          docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-scrum:1.0
-          docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-user:1.0
+          docker tag postgres ${{ secrets.DOCKER_USERNAME }}/scrum-user-postgres:2.0
+          docker tag dpage/pgadmin4 ${{ secrets.DOCKER_USERNAME }}/scrum-user-pgadmin:2.0
+          docker tag docker-scrum-and-user-spring-boot-scrum ${{ secrets.DOCKER_USERNAME }}/spring-boot-scrum:2.0
+          docker tag docker-scrum-and-user-spring-boot-user ${{ secrets.DOCKER_USERNAME }}/spring-boot-user:2.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/scrum-user-postgres:2.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/scrum-user-pgadmin:2.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-scrum:2.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-user:2.0
 
       - name: Deploy with docker-compose
         run: docker-compose up -d
